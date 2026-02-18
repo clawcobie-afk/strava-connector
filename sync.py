@@ -14,7 +14,12 @@ from strava.db import init_db, upsert_activity, get_activity_ids
 @click.command()
 @click.option("--db", default="strava.db", show_default=True, help="Path to SQLite database")
 @click.option("--after", default=None, help="Only sync activities after this date (YYYY-MM-DD)")
-def main(db, after):
+def main(db: str, after: str | None) -> None:
+    """Sync Strava activities to a local SQLite database.
+
+    Refreshes the OAuth access token, then pages through the Strava API and
+    upserts each activity that is not already present in the database.
+    """
     client_id = os.environ["STRAVA_CLIENT_ID"]
     client_secret = os.environ["STRAVA_CLIENT_SECRET"]
     access_token = os.environ["STRAVA_ACCESS_TOKEN"]

@@ -1,0 +1,7 @@
+Metadata-Version: 2.4
+Name: strava-connector
+Version: 0.1.0
+Requires-Python: >=3.12
+Requires-Dist: click
+Requires-Dist: flask
+Requires-Dist: requests

@@ -1,0 +1,3 @@
+[console_scripts]
+strava-sync = sync:main
+strava-webhook = webhook_server:main
