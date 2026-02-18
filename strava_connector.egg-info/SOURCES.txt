@@ -1,4 +1,6 @@
 README.md
+auth.py
+check.py
 pyproject.toml
 sync.py
 webhook_server.py
@@ -12,6 +14,7 @@ strava_connector.egg-info/dependency_links.txt
 strava_connector.egg-info/entry_points.txt
 strava_connector.egg-info/requires.txt
 strava_connector.egg-info/top_level.txt
+tests/test_auth.py
 tests/test_client.py
 tests/test_db.py
 tests/test_webhook.py

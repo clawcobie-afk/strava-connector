@@ -12,9 +12,10 @@ dependencies = ["click", "flask", "requests"]
 strava-sync = "sync:main"
 strava-webhook = "webhook_server:main"
 strava-auth = "auth:main"
+strava-check = "check:main"
 
 [tool.setuptools]
-py-modules = ["sync", "webhook_server", "auth"]
+py-modules = ["sync", "webhook_server", "auth", "check"]
 
 [tool.setuptools.packages.find]
 where = ["."]

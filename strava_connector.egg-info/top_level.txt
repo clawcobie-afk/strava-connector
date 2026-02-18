@@ -1,3 +1,5 @@
+auth
+check
 strava
 sync
 webhook_server
