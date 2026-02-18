@@ -38,6 +38,10 @@ curl -X POST https://www.strava.com/api/v3/push_subscriptions \
   -F "verify_token=$STRAVA_WEBHOOK_VERIFY_TOKEN"
 ```
 
+## Context7
+
+Vždy používej Context7 MCP při dotazech na dokumentaci knihoven a API, generování kódu, nebo konfiguraci – i bez explicitní žádosti.
+
 ## Konvence
 - TDD: testy jsou mockované (requests, SQLite přes tmp_path)
 - `handle_event` zpracovává jen `object_type=activity` + `aspect_type=create`
