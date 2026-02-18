@@ -1,9 +1,11 @@
 #!/usr/bin/env python3
 import os
 import sqlite3
+import sys
 from datetime import datetime, timezone
 
 import click
+import requests
 
 from strava.client import get_activities, refresh_access_token
 from strava.db import init_db, upsert_activity, get_activity_ids
@@ -40,26 +42,31 @@ def main(db, after):
     per_page = 200
 
     while True:
-        activities = get_activities(access_token, page=page, per_page=per_page, after=after_ts)
-        if not activities:
-            break
+        try:
+            activities = get_activities(access_token, page=page, per_page=per_page, after=after_ts)
+            if not activities:
+                break
 
-        for activity in activities:
-            activity_id = activity["id"]
-            if activity_id in existing_ids:
-                skipped += 1
-                continue
+            for activity in activities:
+                activity_id = activity["id"]
+                if activity_id in existing_ids:
+                    skipped += 1
+                    continue
 
-            upsert_activity(conn, activity)
-            saved += 1
-            distance_km = activity.get("distance", 0) / 1000
-            name = activity.get("name", "")
-            date = activity.get("start_date_local", activity.get("start_date", ""))[:10]
-            click.echo(f"[{saved}] {name} — {distance_km:.1f} km — {date}")
+                upsert_activity(conn, activity)
+                saved += 1
+                distance_km = activity.get("distance", 0) / 1000
+                name = activity.get("name", "")
+                date = activity.get("start_date_local", activity.get("start_date", ""))[:10]
+                click.echo(f"[{saved}] {name} — {distance_km:.1f} km — {date}")
 
-        if len(activities) < per_page:
-            break
-        page += 1
+            if len(activities) < per_page:
+                break
+            page += 1
+        except requests.exceptions.RequestException as e:
+            print(f"Chyba při stahování aktivit: {e}")
+            print(f"Uloženo aktivit před chybou: {saved}")
+            sys.exit(1)
 
     conn.close()
     click.echo(f"Hotovo: {saved} aktivit uloženo, {skipped} přeskočeno (již existují).")
