@@ -1,5 +1,0 @@
-[console_scripts]
-strava-auth = auth:main
-strava-check = check:main
-strava-sync = sync:main
-strava-webhook = webhook_server:main
